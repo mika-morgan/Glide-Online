@@ -3,7 +3,7 @@ import io
 import contextlib
 
 st.set_page_config(layout="wide")
-st.title("Glide IDE")
+st.title("GLIDE 🧩")
 
 # Inject CSS to reduce padding and fix title cutoff
 st.markdown(
@@ -113,7 +113,7 @@ toolbox = {
 # --- Toolbox Sidebar ---
 st.sidebar.title("Toolbox")
 for category, commands in toolbox.items():
-    with st.sidebar.expander(category, expanded= True):
+    with st.sidebar.expander(category, expanded=True):
         for label, code in commands.items():
             if st.button(label, key=label):
                 st.session_state.code_editor_text += code
