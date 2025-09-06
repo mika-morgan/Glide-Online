@@ -5,6 +5,19 @@ import contextlib
 st.set_page_config(layout="wide")
 st.title("Glide IDE")
 
+# Remove blank space at top of page
+st.markdown(
+    """
+    <style>
+        .block-container {
+            padding-top: 1rem !important;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
+
+
 # --- Session state ---
 if "code_editor_text" not in st.session_state:
     st.session_state.code_editor_text = ""
