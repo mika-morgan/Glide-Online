@@ -27,7 +27,7 @@ st.markdown(
     unsafe_allow_html=True
 )
 
-# --- Session state ---
+# --- Session State ---
 if "code_editor_text" not in st.session_state:
     st.session_state.code_editor_text = ""
 
@@ -110,7 +110,7 @@ toolbox = {
     }
 }
 
-# --- Sidebar (always visible) ---
+# --- Toolbox Sidebar ---
 st.sidebar.title("Toolbox")
 for category, commands in toolbox.items():
     with st.sidebar.expander(category, expanded=(category == "Basics")):
@@ -118,7 +118,7 @@ for category, commands in toolbox.items():
             if st.button(label, key=label):
                 st.session_state.code_editor_text += code
 
-# --- Code Editor ---
+# --- Main Code Editor ---
 st.subheader("Code Editor")
 code_input = st.text_area(
     label="Write your code here:",
