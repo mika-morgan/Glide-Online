@@ -5,6 +5,7 @@ import contextlib
 st.set_page_config(page_title="Glide Online IDE", page_icon="🧩", layout="wide")
 st.title("GLIDE 🧩")
 
+'''
 # Inject CSS to reduce padding and fix title cutoff
 st.markdown(
     """
@@ -26,6 +27,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+'''
 
 # --- Session state ---
 if "code_editor_text" not in st.session_state:
