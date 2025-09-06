@@ -15,36 +15,36 @@ st.sidebar.title("Toolbox")
 # --- Category: Basics ---
 with st.sidebar.expander("Basics", expanded=True):
     if st.button("Comment"):
-        st.session_state.code_to_insert = "# This is a comment"
+        st.session_state.code_to_insert += "# This is a comment"
     if st.button("print"):
-        st.session_state.code_to_insert = "print('Hello, world!')"
+        st.session_state.code_to_insert += "print('Hello, world!')"
     if st.button("Make Variable"):
-        st.session_state.code_to_insert = "name = 'Alice'"
+        st.session_state.code_to_insert += "name = 'Alice'"
     if st.button("Make multiple Variables"):
-        st.session_state.code_to_insert = "x, y, z = 1, 2, 3"
+        st.session_state.code_to_insert += "x, y, z = 1, 2, 3"
     if st.button("Input"):
-        st.session_state.code_to_insert = "user_input = input('Enter something: ')\nprint('You entered:', user_input)"
+        st.session_state.code_to_insert += "user_input = input('Enter something: ')\nprint('You entered:', user_input)"
 
 # --- Category: Math Operations ---
 with st.sidebar.expander("Math Operations", expanded=False):
     if st.button("Addition"):
-        st.session_state.code_to_insert = "x = 5 + 3\nprint('Result:', x)"
+        st.session_state.code_to_insert += "x = 5 + 3\nprint('Result:', x)"
     if st.button("Subtraction"):
-        st.session_state.code_to_insert = "x = 10 - 4\nprint('Result:', x)"
+        st.session_state.code_to_insert += "x = 10 - 4\nprint('Result:', x)"
     if st.button("Multiplication"):
-        st.session_state.code_to_insert = "x = 6 * 7\nprint('Result:', x)"
+        st.session_state.code_to_insert += "x = 6 * 7\nprint('Result:', x)"
     if st.button("Division"):
-        st.session_state.code_to_insert = "x = 20 / 4\nprint('Result:', x)"
+        st.session_state.code_to_insert += "x = 20 / 4\nprint('Result:', x)"
     if st.button("Integer Division"):
-        st.session_state.code_to_insert = "x = 20 // 3\nprint('Result:', x)"
+        st.session_state.code_to_insert += "x = 20 // 3\nprint('Result:', x)"
     if st.button("Remainder"):
-        st.session_state.code_to_insert = "x = 10 % 3\nprint('Result:', x)"
+        st.session_state.code_to_insert += "x = 10 % 3\nprint('Result:', x)"
     if st.button("Exponentiation"):
-        st.session_state.code_to_insert = "x = 2 ** 3\nprint('Power:', x)"
+        st.session_state.code_to_insert += "x = 2 ** 3\nprint('Power:', x)"
     if st.button("Increment by value"):
-        st.session_state.code_to_insert = "x = 1\nx += 1\nprint(x)"
+        st.session_state.code_to_insert += "x = 1\nx += 1\nprint(x)"
     if st.button("Decrement by value"):
-        st.session_state.code_to_insert = "x = 2\nx -= 1\nprint(x)"
+        st.session_state.code_to_insert += "x = 2\nx -= 1\nprint(x)"
 
 # --- Category: Conditionals ---
 with st.sidebar.expander("Conditionals", expanded=False):
