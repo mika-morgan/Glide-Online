@@ -51,17 +51,6 @@ toolbox = {
         "Increment by value": "x = 1\nx += 1\nprint(x)\n\n",
         "Decrement by value": "x = 2\nx -= 1\nprint(x)\n\n"
     },
-    "Logical Operators": {
-    "Equals (==)": "x == y\n\n",
-    "Not Equals (!=)": "x != y\n\n",
-    "Greater Than (>)": "x > y\n\n",
-    "Less Than (<)": "x < y\n\n",
-    "Greater Than or Equal To (>=)": "x >= y\n\n",
-    "Less Than or Equal To (<=)": "x <= y\n\n",
-    "And": "x > 5 and y < 10\n\n",
-    "Or": "x > 5 or y < 10\n\n",
-    "Not": "not x > 5\n\n"
-    },
     "Conditionals": {
         "if Statement": "if x > 5:\n    print('x is greater than 5')\n\n",
         "if-else Statement": "if x > 5:\n    print('x is big')\nelse:\n    print('x is small')\n\n",
@@ -88,14 +77,6 @@ toolbox = {
             "    if x == 'q':\n"
             "        break\n\n"
         )
-    },
-    "Lists": {
-    "Make a List": "my_list = [1, 2, 3]\n\n",
-    "Access List Item": "first = my_list[0]\nprint(first)\n\n",
-    "Change List Item": "my_list[1] = 4\n\n",
-    "Append to List": "my_list.append(5)\n\n",
-    "Length of List": "print(len(my_list))\n\n",
-    "Loop Through List": "for item in my_list:\n    print(item)\n\n"
     },
     "Functions": {
         "Define Fruitless Function": (
