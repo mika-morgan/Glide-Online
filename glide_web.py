@@ -3,6 +3,9 @@ import io
 import contextlib
 
 st.set_page_config(layout="wide")
+st.title("GLIDE 🧩")
+
+# Inject CSS to reduce padding and fix title cutoff
 st.markdown(
     """
     <style>
@@ -19,24 +22,14 @@ st.markdown(
         .stTextArea label {
             display: none;
         }
-        .hamburger {
-            position: absolute;
-            top: 1.2rem;
-            left: 1.5rem;
-            z-index: 1000;
-        }
     </style>
     """,
     unsafe_allow_html=True
 )
 
-st.title("GLIDE 🧩")
-
 # --- Session state ---
 if "code_editor_text" not in st.session_state:
     st.session_state.code_editor_text = ""
-if "show_sidebar" not in st.session_state:
-    st.session_state.show_sidebar = True
 
 # --- Toolbox Commands ---
 toolbox = {
@@ -117,22 +110,13 @@ toolbox = {
     }
 }
 
-# --- Toolbox Sidebar Toggle ---
-with st.container():
-    st.markdown('<div class="hamburger">', unsafe_allow_html=True)
-    if st.button("☰", help="Toggle Toolbox"):
-        st.session_state.show_sidebar = not st.session_state.show_sidebar
-    st.markdown('</div>', unsafe_allow_html=True)
-
-# --- Toolbox Sidebar ---
-if st.session_state.show_sidebar:
-    with st.sidebar:
-        st.title("Toolbox")
-        for category, commands in toolbox.items():
-            with st.expander(category, expanded=(category == "Basics")):
-                for label, code in commands.items():
-                    if st.button(label, key=label):
-                        st.session_state.code_editor_text += code
+# --- Sidebar (always visible) ---
+st.sidebar.title("Toolbox")
+for category, commands in toolbox.items():
+    with st.sidebar.expander(category, expanded=(category == "Basics")):
+        for label, code in commands.items():
+            if st.button(label, key=label):
+                st.session_state.code_editor_text += code
 
 # --- Code Editor ---
 st.subheader("Code Editor")
