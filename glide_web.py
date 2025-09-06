@@ -3,7 +3,7 @@ import io
 import contextlib
 
 st.set_page_config(layout="wide")
-st.title("Glide IDE")
+st.title("GLIDE 🧩")
 
 # Inject CSS to reduce padding and fix title cutoff
 st.markdown(
@@ -32,6 +32,25 @@ if "code_editor_text" not in st.session_state:
     st.session_state.code_editor_text = ""
 
 # --- Toolbox Commands ---
+# Sidebar toggle
+if "show_sidebar" not in st.session_state:
+    st.session_state.show_sidebar = True
+
+with st.container():
+    col1, col2 = st.columns([1, 10])
+    with col1:
+        if st.button("☰", help="Toggle Toolbox"):
+            st.session_state.show_sidebar = not st.session_state.show_sidebar
+
+if st.session_state.show_sidebar:
+    with st.sidebar:
+        st.header("Toolbox")
+        for category, buttons in toolbox_commands.items():
+            with st.expander(category, expanded=True):
+                for label, code in buttons.items():
+                    if st.button(label, key=f"{category}_{label}"):
+                        st.session_state.code += code
+
 toolbox = {
     "Basics": {
         "Comment": "# This is a comment\n\n",
