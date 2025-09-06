@@ -31,8 +31,7 @@ st.markdown(
 if "code_editor_text" not in st.session_state:
     st.session_state.code_editor_text = ""
 
-# --- Toolbox Commands ---
-# Sidebar toggle
+# Optional toggle button to collapse the sidebar
 if "show_sidebar" not in st.session_state:
     st.session_state.show_sidebar = True
 
@@ -42,15 +41,7 @@ with st.container():
         if st.button("☰", help="Toggle Toolbox"):
             st.session_state.show_sidebar = not st.session_state.show_sidebar
 
-if st.session_state.show_sidebar:
-    with st.sidebar:
-        st.header("Toolbox")
-        for category, buttons in toolbox_commands.items():
-            with st.expander(category, expanded=True):
-                for label, code in buttons.items():
-                    if st.button(label, key=f"{category}_{label}"):
-                        st.session_state.code += code
-
+# --- Toolbox Data ---
 toolbox = {
     "Basics": {
         "Comment": "# This is a comment\n\n",
@@ -71,15 +62,15 @@ toolbox = {
         "Decrement by value": "x = 2\nx -= 1\nprint(x)\n\n"
     },
     "Logical Operators": {
-    "Equals (==)": "x == y\n\n",
-    "Not Equals (!=)": "x != y\n\n",
-    "Greater Than (>)": "x > y\n\n",
-    "Less Than (<)": "x < y\n\n",
-    "Greater Than or Equal To (>=)": "x >= y\n\n",
-    "Less Than or Equal To (<=)": "x <= y\n\n",
-    "And": "x > 5 and y < 10\n\n",
-    "Or": "x > 5 or y < 10\n\n",
-    "Not": "not x > 5\n\n"
+        "Equals (==)": "x == y\n\n",
+        "Not Equals (!=)": "x != y\n\n",
+        "Greater Than (>)": "x > y\n\n",
+        "Less Than (<)": "x < y\n\n",
+        "Greater Than or Equal To (>=)": "x >= y\n\n",
+        "Less Than or Equal To (<=)": "x <= y\n\n",
+        "And": "x > 5 and y < 10\n\n",
+        "Or": "x > 5 or y < 10\n\n",
+        "Not": "not x > 5\n\n"
     },
     "Conditionals": {
         "if Statement": "if x > 5:\n    print('x is greater than 5')\n\n",
@@ -109,12 +100,12 @@ toolbox = {
         )
     },
     "Lists": {
-    "Make a List": "my_list = [1, 2, 3]\n\n",
-    "Access List Item": "first = my_list[0]\nprint(first)\n\n",
-    "Change List Item": "my_list[1] = 4\n\n",
-    "Append to List": "my_list.append(5)\n\n",
-    "Length of List": "print(len(my_list))\n\n",
-    "Loop Through List": "for item in my_list:\n    print(item)\n\n"
+        "Make a List": "my_list = [1, 2, 3]\n\n",
+        "Access List Item": "first = my_list[0]\nprint(first)\n\n",
+        "Change List Item": "my_list[1] = 4\n\n",
+        "Append to List": "my_list.append(5)\n\n",
+        "Length of List": "print(len(my_list))\n\n",
+        "Loop Through List": "for item in my_list:\n    print(item)\n\n"
     },
     "Functions": {
         "Define Fruitless Function": (
@@ -130,19 +121,20 @@ toolbox = {
 }
 
 # --- Toolbox Sidebar ---
-st.sidebar.title("Toolbox")
-for category, commands in toolbox.items():
-    with st.sidebar.expander(category, expanded=(category == "Basics")):
-        for label, code in commands.items():
-            if st.button(label, key=label):
-                st.session_state.code_editor_text += code
+if st.session_state.show_sidebar:
+    st.sidebar.title("Toolbox")
+    for category, commands in toolbox.items():
+        with st.sidebar.expander(category, expanded=(category == "Basics")):
+            for label, code in commands.items():
+                if st.button(label, key=label):
+                    st.session_state.code_editor_text += code
 
-# --- Main Editor ---
+# --- Main Code Editor ---
 st.subheader("Code Editor")
 code_input = st.text_area(
     label="Write your code here:",
     height=300,
-    label_visibility="collapsed",  # ← fixes the blank line
+    label_visibility="collapsed",
     key="code_editor_text"
 )
 
