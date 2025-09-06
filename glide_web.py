@@ -1,4 +1,4 @@
-st.set_page_config(page_title="Glide Online IDE", page_icon="🧩", layout="wide")
+st.set_page_config(page_title="Glide Online IDE", layout="wide")
 st.title("GLIDE 🧩")
 
 import streamlit as st
