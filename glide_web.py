@@ -12,11 +12,18 @@ st.markdown(
         .block-container {
             padding-top: 1rem !important;
         }
+    <style>
+        h3 {
+            margin-bottom: 0.25rem;
+        }
+        .stCodeBlock {
+            margin-top: 0.25rem;
+        }
+    </style>
     </style>
     """,
     unsafe_allow_html=True
 )
-
 
 # --- Session state ---
 if "code_editor_text" not in st.session_state:
