@@ -5,34 +5,54 @@ st.set_page_config(page_title="Glide IDE", page_icon="🧩", layout="wide")
 st.set_page_config(page_title="Glide Web IDE", layout="wide")
 st.title("🧩 GLIDE")
 
-# --- Toolbox ---
-st.sidebar.header("Toolbox")
+# Initialize session state for inserting code
+if "code_to_insert" not in st.session_state:
+    st.session_state.code_to_insert = ""
 
+# Sidebar Toolbox – Always Visible
+st.sidebar.title("Toolbox")
 
-code_categories = {
-"Basics": {
-"Print Hello": "print('Hello, world!')",
-"Set Variable": "x = 5"
-},
-"Conditionals": {
-"If Statement": "x = 10\nif x > 5:\n print('x is greater than 5')"
-},
-"Loops": {
-"For Loop": "for i in range(5):\n print(i)"
-},
-"Functions": {
-"Define Function": "def greet(name):\n print(f'Hello, {name}')"
-}
-}
+# --- Category: Basics ---
+with st.sidebar.expander("Basics", expanded=True):
+    if st.button("Print Hello"):
+        st.session_state.code_to_insert = "print('Hello, world!')"
+    if st.button("Set Variable"):
+        st.session_state.code_to_insert = "x = 5"
 
+# --- Category: Conditionals ---
+with st.sidebar.expander("Conditionals", expanded=False):
+    if st.button("If Statement"):
+        st.session_state.code_to_insert = "x = 10\nif x > 5:\n    print('x is greater than 5')"
+    if st.button("If/Else Statement"):
+        st.session_state.code_to_insert = "x = 10\nif x > 5:\n    print('Big')\nelse:\n    print('Small')"
 
-with st.sidebar.expander("📚 Code Snippets", expanded=True):
-    for category, snippets in code_categories.items():
-        st.markdown(f"**{category}**")
-        cols = st.columns(len(snippets))
-        for i, (label, code) in enumerate(snippets.items()):
-            if cols[i].button(label, key=f"btn-{category}-{i}"):
-                st.session_state.editor += f"\n{code}\n"
+# --- Category: Loops ---
+with st.sidebar.expander("Loops", expanded=False):
+    if st.button("For Loop"):
+        st.session_state.code_to_insert = "for i in range(5):\n    print(i)"
+    if st.button("While Loop"):
+        st.session_state.code_to_insert = "x = 0\nwhile x < 5:\n    print(x)\n    x += 1"
+
+# --- Category: Functions ---
+with st.sidebar.expander("Functions", expanded=False):
+    if st.button("Define Function"):
+        st.session_state.code_to_insert = "def greet():\n    print('Hello')"
+    if st.button("Function with Args"):
+        st.session_state.code_to_insert = "def greet(name):\n    print(f'Hello, {name}')"
+
+# --- Code Editor (Main Panel) ---
+st.title("Glide Code Editor")
+code_input = st.text_area("Your Code:", height=300, value=st.session_state.code_to_insert)
+
+# Update session state with latest code
+st.session_state.code_to_insert = code_input
+
+# Run the code
+if st.button("Run Code"):
+    try:
+        exec(code_input, {})
+    except Exception as e:
+        st.error(f"Error: {e}")
 
 
 # --- Code Editor ---
