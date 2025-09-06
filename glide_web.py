@@ -16,7 +16,7 @@ toolbox = {
         "Print": "print('Hello, world!')\n\n",
         "Make Variable": "name = 'Mika'\n\n",
         "Make Multiple Variables": "x, y, z = 1, 2, 3\n\n",
-        "Input": "name = input('What is your name? ')\nprint(\"Hello\", name)",
+        "Input": "name = input('What is your name? ')\nprint('Hello', name)",
 },
 "Math Operations": {
         "Addition": "x = 5 + 3\nprint('Result:', x)\n\n",
@@ -56,7 +56,7 @@ toolbox = {
 # --- Toolbox Sidebar ---
 st.sidebar.title("Toolbox")
 for category, commands in toolbox.items():
-        with st.sidebar.expander(category, expanded=(category == "Basics")):
+        with st.sidebar.expander(category, expanded=True):
                 for label, code in commands.items():
                         if st.button(label, key=label):
                                 st.session_state.code_editor_text += code
@@ -67,11 +67,11 @@ code_input = st.text_area("", height=300, key="code_editor_text")
 
 # --- Run Code ---
 if st.button("Run Code"):
-        output_buffer = io.StringIO()
-try:
+    output_buffer = io.StringIO()
+    try:
         with contextlib.redirect_stdout(output_buffer):
-                exec(code_input, {})
-except Exception as e:
+            exec(code_input, {})
+    except Exception as e:
         output_buffer.write(str(e))
-st.subheader("Output")
-st.code(output_buffer.getvalue())
+    st.subheader("Output")
+    st.code(output_buffer.getvalue())
