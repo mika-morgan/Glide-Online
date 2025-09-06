@@ -7,7 +7,7 @@ st.title("GLIDE 🧩")
 
 # --- Session state ---
 if "code_editor_text" not in st.session_state:
-st.session_state.code_editor_text = ""
+        st.session_state.code_editor_text = ""
 
 # --- Toolbox Commands ---
 toolbox = {
