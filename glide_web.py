@@ -15,15 +15,15 @@ st.sidebar.title("Toolbox")
 # --- Category: Basics ---
 with st.sidebar.expander("Basics", expanded=True):
     if st.button("Comment"):
-        st.session_state.code_to_insert += "# This is a comment"
+        st.session_state.code_to_insert += "# This is a comment \n"
     if st.button("print"):
-        st.session_state.code_to_insert += "print('Hello, world!')"
+        st.session_state.code_to_insert += "print('Hello, world!') \n"
     if st.button("Make Variable"):
-        st.session_state.code_to_insert += "name = 'Alice'"
+        st.session_state.code_to_insert += "name = 'Mika' \n"
     if st.button("Make multiple Variables"):
-        st.session_state.code_to_insert += "x, y, z = 1, 2, 3"
+        st.session_state.code_to_insert += "x, y, z = 1, 2, 3 \n"
     if st.button("Input"):
-        st.session_state.code_to_insert += "user_input = input('Enter something: ')\nprint('You entered:', user_input)"
+        st.session_state.code_to_insert += "user_input = input('Enter something: ')\nprint('You entered:', user_input) \n"
 
 # --- Category: Math Operations ---
 with st.sidebar.expander("Math Operations", expanded=False):
