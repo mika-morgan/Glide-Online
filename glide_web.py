@@ -1,91 +1,142 @@
+st.set_page_config(page_title="Glide Online IDE", page_icon="🧩", layout="wide")
+st.title("GLIDE 🧩")
+
 import streamlit as st
-import time
+import io
+import contextlib
 
-st.set_page_config(page_title="Glide IDE", page_icon="🧩", layout="wide")
-st.set_page_config(page_title="Glide Web IDE", layout="wide")
-st.title("🧩 GLIDE")
+st.set_page_config(layout="wide")
+st.title("Glide IDE")
 
-# Initialize session state for inserting code
-if "code_to_insert" not in st.session_state:
-    st.session_state.code_to_insert = ""
+# Inject CSS to reduce padding and fix title cutoff
+st.markdown(
+    """
+    <style>
+        .main > div:first-child {
+            padding-top: 1rem !important;
+        }
+        header, footer {visibility: hidden;}
+        .block-container {
+            padding-top: 1rem;
+        }
+        h1 {
+            margin-bottom: 0rem;
+        }
+        .stTextArea label {
+            display: none;
+        }
+    </style>
+    """,
+    unsafe_allow_html=True
+)
 
-# Sidebar Toolbox – Always Visible
+# --- Session state ---
+if "code_editor_text" not in st.session_state:
+    st.session_state.code_editor_text = ""
+
+# --- Toolbox Commands ---
+toolbox = {
+    "Basics": {
+        "Comment": "# This is a comment\n\n",
+        "Print": "print('Hello, world!')\n\n",
+        "Make Variable": "name = 'Mika'\n\n",
+        "Make multiple Variables": "x, y, z = 1, 2, 3\n\n",
+        "Input": "name = input('What is your name? ')\n\n",
+    },
+    "Math Operations": {
+        "Addition": "x = 5 + 3\nprint('Result:', x)\n\n",
+        "Subtraction": "x = 10 - 4\nprint('Result:', x)\n\n",
+        "Multiplication": "x = 6 * 7\nprint('Result:', x)\n\n",
+        "Division": "x = 20 / 4\nprint('Result:', x)\n\n",
+        "Integer Division": "x = 20 // 3\nprint('Result:', x)\n\n",
+        "Remainder": "x = 10 % 3\nprint('Result:', x)\n\n",
+        "Exponentiation": "x = 2 ** 3\nprint('Power:', x)\n\n",
+        "Increment by value": "x = 1\nx += 1\nprint(x)\n\n",
+        "Decrement by value": "x = 2\nx -= 1\nprint(x)\n\n"
+    },
+    "Logical Operators": {
+    "Equals (==)": "x == y\n\n",
+    "Not Equals (!=)": "x != y\n\n",
+    "Greater Than (>)": "x > y\n\n",
+    "Less Than (<)": "x < y\n\n",
+    "Greater Than or Equal To (>=)": "x >= y\n\n",
+    "Less Than or Equal To (<=)": "x <= y\n\n",
+    "And": "x > 5 and y < 10\n\n",
+    "Or": "x > 5 or y < 10\n\n",
+    "Not": "not x > 5\n\n"
+    },
+    "Conditionals": {
+        "if Statement": "if x > 5:\n    print('x is greater than 5')\n\n",
+        "if-else Statement": "if x > 5:\n    print('x is big')\nelse:\n    print('x is small')\n\n",
+        "if-elif-else Statement": (
+            "if x > 5:\n    print('x > 5')\n"
+            "elif x == 5:\n    print('x = 5')\n"
+            "else:\n    print('x < 5')\n\n"
+        )
+    },
+    "Loops": {
+        "For loop": "for item in [1, 2, 3]:\n    print(item)\n\n",
+        "Range with stop": "for i in range(5):\n    print(i)\n\n",
+        "Range with start & stop": "for i in range(1, 5):\n    print(i)\n\n",
+        "Range with start, stop, step": "for i in range(1, 10, 2):\n    print(i)\n\n",
+        "While loop": "x = 0\nwhile x < 5:\n    print(x)\n    x += 1\n\n",
+        "Nested loop": (
+            "for i in range(2):\n"
+            "    for j in range(3):\n"
+            "        print(i, j)\n\n"
+        ),
+        "Do-While loop": (
+            "while True:\n"
+            "    x = input('Enter q to quit: ')\n"
+            "    if x == 'q':\n"
+            "        break\n\n"
+        )
+    },
+    "Lists": {
+    "Make a List": "my_list = [1, 2, 3]\n\n",
+    "Access List Item": "first = my_list[0]\nprint(first)\n\n",
+    "Change List Item": "my_list[1] = 4\n\n",
+    "Append to List": "my_list.append(5)\n\n",
+    "Length of List": "print(len(my_list))\n\n",
+    "Loop Through List": "for item in my_list:\n    print(item)\n\n"
+    },
+    "Functions": {
+        "Define Fruitless Function": (
+            "def greet(name):\n"
+            "    print('Hello', name)\n\n"
+        ),
+        "Define Fruitful Function": (
+            "def add(x, y):\n"
+            "    return x + y\n\n"
+        ),
+        "Function Call": "greet('Mika')\n\n"
+    }
+}
+
+# --- Toolbox Sidebar ---
 st.sidebar.title("Toolbox")
+for category, commands in toolbox.items():
+    with st.sidebar.expander(category, expanded=(category == "Basics")):
+        for label, code in commands.items():
+            if st.button(label, key=label):
+                st.session_state.code_editor_text += code
 
-# --- Category: Basics ---
-with st.sidebar.expander("Basics", expanded=True):
-    if st.button("Print Hello"):
-        st.session_state.code_to_insert = "print('Hello, world!')"
-    if st.button("Set Variable"):
-        st.session_state.code_to_insert = "x = 5"
-
-# --- Category: Conditionals ---
-with st.sidebar.expander("Conditionals", expanded=False):
-    if st.button("If Statement"):
-        st.session_state.code_to_insert = "x = 10\nif x > 5:\n    print('x is greater than 5')"
-    if st.button("If/Else Statement"):
-        st.session_state.code_to_insert = "x = 10\nif x > 5:\n    print('Big')\nelse:\n    print('Small')"
-
-# --- Category: Loops ---
-with st.sidebar.expander("Loops", expanded=False):
-    if st.button("For Loop"):
-        st.session_state.code_to_insert = "for i in range(5):\n    print(i)"
-    if st.button("While Loop"):
-        st.session_state.code_to_insert = "x = 0\nwhile x < 5:\n    print(x)\n    x += 1"
-
-# --- Category: Functions ---
-with st.sidebar.expander("Functions", expanded=False):
-    if st.button("Define Function"):
-        st.session_state.code_to_insert = "def greet():\n    print('Hello')"
-    if st.button("Function with Args"):
-        st.session_state.code_to_insert = "def greet(name):\n    print(f'Hello, {name}')"
-
-# --- Code Editor (Main Panel) ---
-st.title("Glide Code Editor")
-code_input = st.text_area("Your Code:", height=300, value=st.session_state.code_to_insert)
-
-# Update session state with latest code
-st.session_state.code_to_insert = code_input
-
-# Run the code
-if st.button("Run Code"):
-    try:
-        exec(code_input, {})
-    except Exception as e:
-        st.error(f"Error: {e}")
-
-
-# --- Code Editor ---
+# --- Main Editor ---
 st.subheader("Code Editor")
-if "editor" not in st.session_state:
-    st.session_state.editor = ""
-
-
-code_input = st.text_area("Write your code here:", height=300, value=st.session_state.editor, key="code_area")
-
+code_input = st.text_area(
+    label="Write your code here:",
+    height=300,
+    label_visibility="collapsed",  # ← fixes the blank line
+    key="code_editor_text"
+)
 
 # --- Run Code ---
-col1, col2 = st.columns([1, 6])
-with col1:
-    run_button = st.button("▶️ Run Code")
-
-
-# --- Output Panel ---
-st.subheader("Output")
-output_area = st.empty()
-
-
-if run_button:
+if st.button("Run Code"):
+    output_buffer = io.StringIO()
     try:
-        # Capture output
-        import io
-        import contextlib
-
-
-        buffer = io.StringIO()
-        with contextlib.redirect_stdout(buffer):
+        with contextlib.redirect_stdout(output_buffer):
             exec(code_input, {})
-        output = buffer.getvalue()
-        output_area.code(output, language="text")
     except Exception as e:
-        output_area.code(f"Error:\n{e}", language="text")
+        output_buffer.write(str(e))
+    st.subheader("Output")
+    st.code(output_buffer.getvalue())
