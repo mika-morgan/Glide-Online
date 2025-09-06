@@ -5,21 +5,23 @@ import contextlib
 st.set_page_config(layout="wide")
 st.title("Glide IDE")
 
-# Remove blank space at top of page
+# Inject CSS to reduce padding and fix title cutoff
 st.markdown(
     """
     <style>
-        .block-container {
+        .main > div:first-child {
             padding-top: 1rem !important;
         }
-    <style>
-        h3 {
-            margin-bottom: 0.25rem;
+        header, footer {visibility: hidden;}
+        .block-container {
+            padding-top: 1rem;
         }
-        .stCodeBlock {
-            margin-top: 0.25rem;
+        h1 {
+            margin-bottom: 0rem;
         }
-    </style>
+        .stTextArea label {
+            display: none;
+        }
     </style>
     """,
     unsafe_allow_html=True
@@ -99,7 +101,12 @@ for category, commands in toolbox.items():
 
 # --- Main Editor ---
 st.subheader("Code Editor")
-code_input = st.text_area(" ", height=300, key="code_editor_text")
+code_input = st.text_area(
+    label="Write your code here:",
+    height=300,
+    label_visibility="collapsed",  # ← fixes the blank line
+    key="code_editor_text"
+)
 
 # --- Run Code ---
 if st.button("Run Code"):
