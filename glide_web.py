@@ -1,12 +1,9 @@
-st.set_page_config(page_title="Glide Online IDE", layout="wide")
-st.title("GLIDE 🧩")
-
 import streamlit as st
 import io
 import contextlib
 
-st.set_page_config(layout="wide")
-st.title("Glide IDE")
+st.set_page_config(page_title="Glide Online IDE", page_icon="🧩", layout="wide")
+st.title("GLIDE 🧩")
 
 # Inject CSS to reduce padding and fix title cutoff
 st.markdown(
