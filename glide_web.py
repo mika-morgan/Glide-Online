@@ -13,7 +13,7 @@ if "code_editor_text" not in st.session_state:
 toolbox = {
     "Basics": {
         "Comment": "# This is a comment\n\n",
-        "print": "print('Hello, world!')\n\n",
+        "Print": "print('Hello, world!')\n\n",
         "Make Variable": "name = 'Mika'\n\n",
         "Make multiple Variables": "x, y, z = 1, 2, 3\n\n",
         "Input": "name = input('What is your name? ')\n\n",
@@ -43,13 +43,13 @@ toolbox = {
         "Range with stop": "for i in range(5):\n    print(i)\n\n",
         "Range with start & stop": "for i in range(1, 5):\n    print(i)\n\n",
         "Range with start, stop, step": "for i in range(1, 10, 2):\n    print(i)\n\n",
-        "while loop": "x = 0\nwhile x < 5:\n    print(x)\n    x += 1\n\n",
+        "While loop": "x = 0\nwhile x < 5:\n    print(x)\n    x += 1\n\n",
         "Nested loop": (
             "for i in range(2):\n"
             "    for j in range(3):\n"
             "        print(i, j)\n\n"
         ),
-        "do-while loop": (
+        "Do-While loop": (
             "while True:\n"
             "    x = input('Enter q to quit: ')\n"
             "    if x == 'q':\n"
