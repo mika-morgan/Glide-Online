@@ -82,7 +82,7 @@ for category, commands in toolbox.items():
 
 # --- Main Editor ---
 st.subheader("Code Editor")
-code_input = st.text_area("", height=300, key="code_editor_text")
+code_input = st.text_area("", height=300, key="code_editor_text", label_visibility="collapsed")
 
 # --- Run Code ---
 if st.button("Run Code"):
