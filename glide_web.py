@@ -16,7 +16,8 @@ toolbox = {
         "Print": "print('Hello, world!')\n\n",
         "Make Variable": "name = 'Mika'\n\n",
         "Make Multiple Variables": "x, y, z = 1, 2, 3\n\n",
-        "Input": "name = input('What is your name? ')\nprint('Hello', name)",
+        "Text Input": "name = input('What is your name? ')\nprint('Hello', name)",
+        "Numeric Input": "num = int(input('Enter a number: ')\nprint('The number squared is: ', num * num)"
 },
 "Math Operations": {
         "Addition": "x = 5 + 3\nprint('Result:', x)\n\n",
