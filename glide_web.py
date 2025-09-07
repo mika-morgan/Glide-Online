@@ -9,12 +9,12 @@ st.title("GLIDE 🧩")
 st.markdown(
     """
     <style>
-        .block-container {
+        .main > div:first-child {
             padding-top: 1rem !important;
         }
-
-        #header, footer {visibility: hidden;}
-        
+        .block-container {
+            padding-top: 1rem;
+        }
         h1 {
             margin-bottom: 0rem;
         }
