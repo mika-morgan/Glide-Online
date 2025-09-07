@@ -9,15 +9,15 @@ st.title("GLIDE 🧩")
 st.markdown(
     """
     <style>
-        .main > div:first-child {
+        .block-container {
             padding-top: 1rem !important;
         }
-        .block-container {
-            padding-top: 1rem;
-        }
+
         h1 {
+            margin-top: 0rem;
             margin-bottom: 0rem;
         }
+
         .stTextArea label {
             display: none;
         }
