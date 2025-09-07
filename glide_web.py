@@ -13,7 +13,7 @@ st.markdown(
             padding-top: 1rem !important;
         }
 
-        header, footer {visibility: hidden;}
+        #header, footer {visibility: hidden;}
         
         h1 {
             margin-bottom: 0rem;
