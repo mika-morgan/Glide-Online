@@ -5,19 +5,26 @@ import contextlib
 st.set_page_config(page_title="Glide Online IDE", page_icon="🧩", layout="wide")
 st.title("GLIDE 🧩")
 
-# Inject CSS to reduce padding and fix title cutoff
 st.markdown(
     """
     <style>
-        .block-container {
-            padding-top: 1rem !important;
+        /* Reduce padding at top of page */
+        .main > div:first-child {
+            padding-top: 0.5rem !important;
         }
 
+        /* Tighten title spacing only */
         h1 {
-            margin-top: 0rem;
-            margin-bottom: 0rem;
+            margin-top: 0rem !important;
+            margin-bottom: 0.75rem !important;
         }
 
+        /* Remove space from inside the block container */
+        .block-container {
+            padding-top: 0rem !important;
+        }
+
+        /* Hide label for the text area */
         .stTextArea label {
             display: none;
         }
@@ -25,6 +32,7 @@ st.markdown(
     """,
     unsafe_allow_html=True
 )
+
 
 # --- Session state ---
 if "code_editor_text" not in st.session_state:
